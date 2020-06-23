@@ -1,32 +1,48 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%--
+  Created by IntelliJ IDEA.
+  User: magdalena
+  Date: 22.06.2020
+  Time: 22:30
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html lang="pl">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Document</title>
-
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <body>
-<%@include file="header.jsp"%>
 
-<section class="stats">
+<header class="header--main-page">
+    <%@ include file="header.jsp" %>
+    <div class="slogan container container--90">
+        <div class="slogan--item">
+            <h1>
+                Zacznij pomagać!<br/>
+                Oddaj niechciane rzeczy w zaufane ręce
+            </h1>
+        </div>
+    </div>
+</header>
+
+<section id="stats" class="stats">
     <div class="container container--85">
         <div class="stats--item">
-            <em>13</em>
-
+            <em>${allBags}</em>
             <h3>Oddanych worków</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est beatae, quod accusamus illum
                 tempora!</p>
         </div>
 
         <div class="stats--item">
-            <em>5</em>
+            <em>${allDonations}</em>
             <h3>Przekazanych darów</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate quas
                 quam.</p>
@@ -35,7 +51,7 @@
     </div>
 </section>
 
-<section class="steps">
+<section id="steps" class="steps">
     <h2>Wystarczą 4 proste kroki</h2>
 
     <div class="steps--container">
@@ -64,7 +80,7 @@
     <a href="#" class="btn btn--large">Załóż konto</a>
 </section>
 
-<section class="about-us">
+<section id="about-us" class="about-us">
     <div class="about-us--text">
         <h2>O nas</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vitae animi rem pariatur incidunt libero
@@ -75,7 +91,7 @@
     </div>
 </section>
 
-<section class="help">
+<section id="help" class="help">
     <h2>Komu pomagamy?</h2>
 
     <!-- SLIDE 1 -->
@@ -84,35 +100,28 @@
             Możesz sprawdzić czym się zajmują.</p>
 
         <ul class="help--slides-items">
-            <li>
+            <c:forEach items="${allInstitutions}" var="institution" varStatus="theCount">
+                <c:if test="${theCount.index % 2 == 0}">
+                    <li>
+                </c:if>
                 <div class="col">
-                    <div class="title">Fundacja "Dbam o Zdrowie"</div>
-                    <div class="subtitle">Cel i misja: Pomoc dzieciom z ubogich rodzin.</div>
+                <div class="title">${institution.name}</div>
+                <div class="subtitle">${institution.description}</div>
                 </div>
-
-                <div class="col">
-                    <div class="title">Fundacja "A kogo"</div>
-                    <div class="subtitle">Cel i misja: Pomoc wybudzaniu dzieci ze śpiączki.</div>
-                </div>
-            </li>
-
-            <li>
-                <div class="col">
-                    <div class="title">Fundacja “Dla dzieci"</div>
-                    <div class="subtitle">Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji życiowej.</div>
-                </div>
-                <div class="col">
-                    <div class="title">Fundacja “Bez domu”</div>
-                    <div class="subtitle">Cel i misja: Pomoc dla osób nie posiadających miejsca zamieszkania</div>
-                </div>
-
-            </li>
-
+                <c:if test="${theCount.index % 2 == 1}">
+                </li>
+                </c:if>
+            </c:forEach>
         </ul>
+
+
     </div>
 
 </section>
+
 <%@ include file="footer.jsp" %>
+
 <script src="<c:url value="/resources/js/app.js"/>"></script>
+
 </body>
 </html>
