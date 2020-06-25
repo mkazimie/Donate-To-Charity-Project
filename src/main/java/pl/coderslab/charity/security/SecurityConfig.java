@@ -1,4 +1,4 @@
-package pl.coderslab.heymployment.security;
+package pl.coderslab.charity.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.coderslab.heymployment.service.SpringDataUserDetailsService;
+import pl.coderslab.charity.service.SpringDataUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and().formLogin().loginPage("/login")
-                .failureUrl("/login/error")
+                .failureUrl("/404")
                 .defaultSuccessUrl("/user/home")
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll()
