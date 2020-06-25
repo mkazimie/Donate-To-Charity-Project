@@ -1,4 +1,4 @@
-package pl.coderslab.heymployment.exception;
+package pl.coderslab.charity.exception;
 
 public class RecordAlreadyExistsException extends RuntimeException {
 

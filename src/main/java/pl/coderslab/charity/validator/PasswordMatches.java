@@ -1,4 +1,4 @@
-package pl.coderslab.heymployment.validator;
+package pl.coderslab.charity.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Documented
 
 public @interface PasswordMatches { 
-    String message() default "Passwords don't match";
+    String message() default "Hasła nie mogą się różnić";
     Class<?>[] groups() default {}; 
     Class<? extends Payload>[] payload() default {};
 }

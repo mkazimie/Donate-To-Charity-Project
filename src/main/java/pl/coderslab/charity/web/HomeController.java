@@ -2,38 +2,69 @@ package pl.coderslab.charity.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.domain.Donation;
 import pl.coderslab.charity.domain.Institution;
-import pl.coderslab.charity.repository.DonationRepository;
-import pl.coderslab.charity.repository.InstitutionRepository;
+import pl.coderslab.charity.domain.dto.UserDto;
+import pl.coderslab.charity.exception.RecordAlreadyExistsException;
+import pl.coderslab.charity.service.DonationService;
+import pl.coderslab.charity.service.InstitutionService;
+import pl.coderslab.charity.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
 @Controller
 public class HomeController {
 
-    private final InstitutionRepository institutionRepository;
-    private final DonationRepository donationRepository;
+    private final InstitutionService institutionService;
+    private final DonationService donationService;
+    private final UserService userService;
 
-    public HomeController(InstitutionRepository institutionRepository, DonationRepository donationRepository) {
-        this.institutionRepository = institutionRepository;
-        this.donationRepository = donationRepository;
+    public HomeController(InstitutionService institutionService, DonationService donationService, UserService userService) {
+        this.institutionService = institutionService;
+        this.donationService = donationService;
+        this.userService = userService;
     }
 
 
     @RequestMapping("/")
     public String homeAction(Model model){
-        List<Institution> allInstitutions = institutionRepository.findAll();
-        List<Donation> allDonations = donationRepository.findAll();
+        List<Institution> allInstitutions = institutionService.findAll();
+        List<Donation> allDonations = donationService.findAll();
         Integer allBags = sumOfBags(allDonations);
         model.addAttribute("allInstitutions", allInstitutions);
         model.addAttribute("allDonations", allDonations.size());
         model.addAttribute("allBags", allBags);
-
         return "index";
     }
+
+
+    @GetMapping("/register")
+    public String register(Model model){
+        model.addAttribute("user", new UserDto());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String createUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult, Model model){
+        if (!bindingResult.hasErrors()){
+            try {
+                userService.registerUser(userDto);
+            }catch (RecordAlreadyExistsException e){
+                model.addAttribute("failed", "Podany email istnieje w bazie danych");
+                return "register";
+            }
+            return "redirect:/login";
+        }
+        return "register";
+    }
+
 
 
 
