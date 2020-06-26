@@ -9,8 +9,13 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
 
-public @interface PasswordMatches { 
-    String message() default "Hasła nie mogą się różnić";
+public @interface PasswordMatches {
+
+    String message() default "Hasła muszą być identyczne";
     Class<?>[] groups() default {}; 
     Class<? extends Payload>[] payload() default {};
+
+    String first();
+
+    String second();
 }

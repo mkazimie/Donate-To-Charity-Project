@@ -22,8 +22,16 @@ public class User {
     private long id;
 
     @NotBlank
+    @Column(name = "first_name")
+    private String name;
+
+    @NotBlank
+    @Column(name = "last_name")
+    private String lastName;
+
+    @NotBlank
     @Email
-    @Column(nullable = false, name = "email", unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotBlank

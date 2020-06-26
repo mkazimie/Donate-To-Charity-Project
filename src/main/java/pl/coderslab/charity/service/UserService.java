@@ -10,6 +10,8 @@ public interface UserService {
 
     void saveUser(User user);
 
+    void createUser(User user);
+
     void registerUser (UserDto userDto) throws RecordAlreadyExistsException;
 
 }

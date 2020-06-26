@@ -18,9 +18,14 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <body>
+<header class="header--main-page">
 <nav class="container container--70">
     <ul class="nav--actions">
-        <li><a href="/logout" class="btn btn--small btn--without-border">Wyloguj</a></li>
+        <form action="<c:url value="/logout"/>" method="post">
+            <li><input type="submit" class="btn btn--small btn--without-border" value="Wyloguj"/></li>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+<%--        <li><a href="/logout" class="btn btn--small btn--without-border">Wyloguj</a></li>--%>
     </ul>
 
     <ul>
@@ -32,7 +37,7 @@
         <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>
     </ul>
 </nav>
-
+</header>
 
 <body>
 <h1> Witaj, użytkowniku </h1>

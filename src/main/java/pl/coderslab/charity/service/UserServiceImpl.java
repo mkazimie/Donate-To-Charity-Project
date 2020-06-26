@@ -33,6 +33,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
+
+        userRepository.save(user);
+    }
+
+    //use only for creating first user with role admin
+    @Override
+    public void createUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(1);
+        Role userRole = roleRepository.findByName("ROLE_ADMIN");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
 
@@ -43,12 +54,14 @@ public class UserServiceImpl implements UserService {
             throw new RecordAlreadyExistsException("Email istnieje w naszej bazie danych");
         } else {
             User user = new User();
+            user.setName(userDto.getName());
+            user.setLastName(userDto.getLastName());
             user.setEmail(userDto.getEmail());
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             user.setEnabled(1);
             Role userRole = roleRepository.findByName("ROLE_USER");
             user.setRoles(new HashSet<>(Arrays.asList(userRole)));
-            saveUser(user);
+            userRepository.save(user);
         }
 
     }

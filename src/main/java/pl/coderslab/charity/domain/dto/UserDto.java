@@ -12,8 +12,16 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@PasswordMatches
+@PasswordMatches(first = "password", second = "matchingPassword", message = "Hasła muszą być identyczne")
 public class UserDto {
+
+    @NotBlank
+    @Length(min = 2, max = 15)
+    private String name;
+
+    @NotBlank
+    @Length(min = 2, max = 15)
+    private String lastName;
 
     @NotBlank
     @Email

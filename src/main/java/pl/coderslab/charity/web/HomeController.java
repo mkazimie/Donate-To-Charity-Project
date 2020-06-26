@@ -3,12 +3,10 @@ package pl.coderslab.charity.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.domain.Donation;
 import pl.coderslab.charity.domain.Institution;
+import pl.coderslab.charity.domain.User;
 import pl.coderslab.charity.domain.dto.UserDto;
 import pl.coderslab.charity.exception.RecordAlreadyExistsException;
 import pl.coderslab.charity.service.DonationService;
@@ -56,7 +54,7 @@ public class HomeController {
         if (!bindingResult.hasErrors()){
             try {
                 userService.registerUser(userDto);
-            }catch (RecordAlreadyExistsException e){
+            } catch (RecordAlreadyExistsException e){
                 model.addAttribute("failed", "Podany email istnieje w bazie danych");
                 return "register";
             }
@@ -65,6 +63,19 @@ public class HomeController {
         return "register";
     }
 
+
+    //    create first user with role admin
+    @GetMapping("/create-admin")
+    @ResponseBody
+    public String createAdmin() {
+        User user = new User();
+        user.setName("Admin");
+        user.setLastName("Admin");
+        user.setPassword("admin");
+        user.setEmail("admin@email.pl");
+        userService.createUser(user);
+        return "Hi admin: " + user.getName();
+    }
 
 
 
