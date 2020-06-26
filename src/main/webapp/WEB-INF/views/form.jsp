@@ -76,14 +76,13 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-        <%--        <form action="form-confirmation.html" method="post">--%>
         <form:form method="post" modelAttribute="donationDto" action="/form">
 
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
 
-                    <%--                póki co nie można zaznaczać checkboxów--%>
+                <div class="errorDisplay"><form:errors path="categories" cssClass="failed"/></div>
                 <c:forEach items="${categories}" var="cat">
                     <div class="form-group form-group--checkbox">
                         <label>
@@ -108,12 +107,11 @@
             <!-- STEP 2 -->
             <div data-step="2">
                 <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
-
+                <div class="errorDisplay"><form:errors path="quantity" cssClass="failed"/></div>
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <form:input path="quantity" step="1" min="1" required="required" id="quantityInput"/>
-                            <%--                        <input type="number" name="bags" step="1" min="1"/>--%>
+                        <form:input path="quantity" step="1" id="quantityInput"/>
                     </label>
                 </div>
 
@@ -127,16 +125,17 @@
             <!-- STEP 3 -->
             <div data-step="3">
                 <h3>Wybierz organizację, której chcesz pomóc:</h3>
-
+                <div class="errorDisplay"><form:errors path="institution" cssClass="failed"/></div>
                 <c:forEach items="${institutions}" var="institution">
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <form:radiobutton path="institution" cssClass="institutionInput"/>
+                            <form:radiobutton path="institution" value="${institution.id}" cssClass="institutionInput"/>
                             <span class="checkbox radio"></span>
                             <span class="description">
                   <div class="title">${institution.name}</div>
                   <div class="subtitle">${institution.description}</div>
                 </span>
+
                         </label>
                     </div>
                 </c:forEach>
@@ -155,35 +154,34 @@
                 <div class="form-section form-section--columns">
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
+
                         <div class="form-group form-group--inline">
+                            <div class="errorDisplay"><form:errors path="street" cssClass="failed"/></div>
                             <label> Ulica
                                 <form:input path="street" id="streetInput"/>
-                                    <%--                                <input type="text" name="address"/>--%>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <div class="errorDisplay"><form:errors path="city" cssClass="failed"/></div>
                             <label> Miasto
                                 <form:input path="city" id="cityInput"/>
-                                    <%--                                <input type="text" name="city"/>--%>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <div class="errorDisplay"><form:errors path="zipCode" cssClass="failed"/></div>
                             <label>
                                 Kod pocztowy
-                                    <%--                                <input type="text" name="postcode"/>--%>
                                 <form:input path="zipCode" id="zipCodeInput"/>
-
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <div class="errorDisplay"><form:errors path="phone" cssClass="failed"/></div>
                             <label>
                                 Numer telefonu
-                                    <%--                                <input type="phone" name="phone"/>--%>
                                 <form:input path="phone" id="phoneInput"/>
-
                             </label>
                         </div>
                     </div>
@@ -191,20 +189,21 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
+                            <div class="errorDisplay"><form:errors path="pickUpDate" cssClass="failed"/></div>
                             <label> Data
                                 <form:input type="date" path="pickUpDate" id="dateInput"/>
-                                    <%--                                <input type="date" name="data"/>--%>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <div class="errorDisplay"><form:errors path="pickUpTime" cssClass="failed"/></div>
                             <label> Godzina
                                 <form:input type="time" path="pickUpTime" id="timeInput"/>
-                                    <%--                                <input type="time" name="time"/>--%>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <div class="errorDisplay"><form:errors path="pickUpComment" cssClass="failed"/></div>
                             <label>
                                 Uwagi dla kuriera
                                 <form:textarea path="pickUpComment" rows="5" id="commentInput"/>
@@ -218,6 +217,7 @@
                 </div>
             </div>
 
+
             <!-- STEP 5 -->
             <div data-step="5">
                 <h3>Podsumowanie Twojej darowizny</h3>
@@ -228,17 +228,11 @@
                         <ul>
                             <li>
                                 <span class="icon icon-bag"></span>
-<%--                                <span class="summary--text"--%>
-<%--                                >4 worki ubrań w dobrym stanie dla dzieci</span--%>
-<%--                                >--%>
                                 <span class="summary--text" id="summary-donation"></span>
                             </li>
 
                             <li>
                                 <span class="icon icon-hand"></span>
-<%--                                <span class="summary--text"--%>
-<%--                                >Dla fundacji "Mam marzenie" w Warszawie</span--%>
-<%--                                >--%>
                                 <span class="summary--text" id="summary-institution"></span>
 
                             </li>
@@ -253,10 +247,6 @@
                                 <li id="summary-city"></li>
                                 <li id="summary-zipCode"></li>
                                 <li id="summary-phone"></li>
-<%--                                <li>Prosta 51</li>--%>
-<%--                                <li>Warszawa</li>--%>
-<%--                                <li>99-098</li>--%>
-<%--                                <li>123 456 789</li>--%>
                             </ul>
                         </div>
 
@@ -266,10 +256,6 @@
                                 <li id="summary-date"></li>
                                 <li id="summary-time"></li>
                                 <li id="summary-comments"></li>
-
-<%--                                <li>13/12/2018</li>--%>
-<%--                                <li>15:40</li>--%>
-<%--                                <li>Brak uwag</li>--%>
                             </ul>
                         </div>
                     </div>

@@ -52,11 +52,13 @@ public class DonationServiceImpl implements DonationService {
         donation.setQuantity(donationDto.getQuantity());
         donation.setInstitution(donationDto.getInstitution());
         donation.setCategories(donationDto.getCategories());
-        donation.setCity(donation.getCity());
-        donation.setPhone(donation.getPhone());
+        donation.setCity(donationDto.getCity());
+        donation.setStreet(donationDto.getStreet());
+        donation.setPhone(donationDto.getPhone());
+        donation.setZipCode(donationDto.getZipCode());
         donation.setPickUpDate(donationDto.getPickUpDate());
-        donation.setPickUpTime(donation.getPickUpTime());
-        donation.setPickUpComment(donation.getPickUpComment());
+        donation.setPickUpTime(donationDto.getPickUpTime());
+        donation.setPickUpComment(donationDto.getPickUpComment());
         saveDonation(donation);
     }
 
