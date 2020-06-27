@@ -82,7 +82,7 @@
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
 
-                <div class="errorDisplay"><form:errors path="categories" cssClass="failed"/></div>
+                <div class="failed"><form:errors path="categories"/></div>
                 <c:forEach items="${categories}" var="cat">
                     <div class="form-group form-group--checkbox">
                         <label>
@@ -107,7 +107,7 @@
             <!-- STEP 2 -->
             <div data-step="2">
                 <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
-                <div class="errorDisplay"><form:errors path="quantity" cssClass="failed"/></div>
+                <div class="failed"><form:errors path="quantity"/></div>
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
@@ -125,7 +125,7 @@
             <!-- STEP 3 -->
             <div data-step="3">
                 <h3>Wybierz organizację, której chcesz pomóc:</h3>
-                <div class="errorDisplay"><form:errors path="institution" cssClass="failed"/></div>
+                <div class="failed"><form:errors path="institution"/></div>
                 <c:forEach items="${institutions}" var="institution">
                     <div class="form-group form-group--checkbox">
                         <label>
@@ -156,21 +156,21 @@
                         <h4>Adres odbioru</h4>
 
                         <div class="form-group form-group--inline">
-                            <div class="errorDisplay"><form:errors path="street" cssClass="failed"/></div>
+                            <div class="failed"><form:errors path="street"/></div>
                             <label> Ulica
                                 <form:input path="street" id="streetInput"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <div class="errorDisplay"><form:errors path="city" cssClass="failed"/></div>
+                            <div class="failed"><form:errors path="city"/></div>
                             <label> Miasto
                                 <form:input path="city" id="cityInput"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <div class="errorDisplay"><form:errors path="zipCode" cssClass="failed"/></div>
+                            <div class="failed"><form:errors path="zipCode"/></div>
                             <label>
                                 Kod pocztowy
                                 <form:input path="zipCode" id="zipCodeInput"/>
@@ -178,7 +178,7 @@
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <div class="errorDisplay"><form:errors path="phone" cssClass="failed"/></div>
+                            <div class="failed"><form:errors path="phone"/></div>
                             <label>
                                 Numer telefonu
                                 <form:input path="phone" id="phoneInput"/>
@@ -189,21 +189,21 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <div class="errorDisplay"><form:errors path="pickUpDate" cssClass="failed"/></div>
+                            <div class="failed"><form:errors path="pickUpDate"/></div>
                             <label> Data
                                 <form:input type="date" path="pickUpDate" id="dateInput"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <div class="errorDisplay"><form:errors path="pickUpTime" cssClass="failed"/></div>
+                            <div class="failed"><form:errors path="pickUpTime"/></div>
                             <label> Godzina
                                 <form:input type="time" path="pickUpTime" id="timeInput"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <div class="errorDisplay"><form:errors path="pickUpComment" cssClass="failed"/></div>
+                            <div class="failed"><form:errors path="pickUpComment"/></div>
                             <label>
                                 Uwagi dla kuriera
                                 <form:textarea path="pickUpComment" rows="5" id="commentInput"/>

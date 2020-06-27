@@ -1,5 +1,6 @@
 package pl.coderslab.charity.web;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import pl.coderslab.charity.service.InstitutionService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 
@@ -52,6 +54,12 @@ public class HomeController {
     @PostMapping("/register")
     public String createUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult, Model model){
         if (!bindingResult.hasErrors()){
+            String password = userDto.getPassword();
+            String matchingPassword = userDto.getMatchingPassword();
+            if (!matchingPassword.equals(password)){
+                model.addAttribute("matchError", "* Powtórz hasło");
+                return "register";
+            }
             try {
                 userService.registerUser(userDto);
             } catch (RecordAlreadyExistsException e){
@@ -64,18 +72,17 @@ public class HomeController {
     }
 
 
-    //    create first user with role admin
-    @GetMapping("/create-admin")
-    @ResponseBody
-    public String createAdmin() {
-        User user = new User();
-        user.setName("Admin");
-        user.setLastName("Admin");
-        user.setPassword("admin");
-        user.setEmail("admin@email.pl");
-        userService.createUser(user);
-        return "Hi admin: " + user.getName();
-    }
+//    @GetMapping("/create-admin")
+//    @ResponseBody
+//    public String createAdmin() {
+//        User user = new User();
+//        user.setName("User");
+//        user.setLastName("User");
+//        user.setPassword("user1");
+//        user.setEmail("user@email.pl");
+//        userService.createUser(user);
+//        return "Hi admin: " + user.getName();
+//    }
 
 
 

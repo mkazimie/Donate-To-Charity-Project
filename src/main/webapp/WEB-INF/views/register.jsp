@@ -27,26 +27,26 @@
     <h3 class="failed"> ${failed} </h3>
     <h2>Załóż konto</h2>
     <form:form method="post" modelAttribute="user">
+        <div class="failed"><form:errors path="name"/></div>
         <div class="form-group">
             <form:input name="firstName" path="name" placeholder="Imię"/>
-            <form:errors path="name" cssClass="failed"/>
         </div>
+        <div class="failed"><form:errors path="lastName"/></div>
         <div class="form-group">
             <form:input name="lastName" path="lastName" placeholder="Nazwisko"/>
-            <form:errors path="lastName" cssClass="failed"/>
         </div>
+        <div class="failed"><form:errors path="email"/></div>
         <div class="form-group">
             <form:input name="email" path="email" placeholder="Email"/>
-            <form:errors path="email" cssClass="failed"/>
         </div>
+        <div class="failed"><form:errors path="password"/></div>
         <div class="form-group">
             <form:password path="password" name="password" placeholder="Hasło"/>
-            <form:errors path="password" cssClass="failed"/>
-
         </div>
+        <div class="failed"><form:errors path="matchingPassword"/></div>
+        <div class="failed">${matchError}</div>
         <div class="form-group">
             <form:password path="matchingPassword" name="password2" placeholder="Powtórz hasło"/>
-            <form:errors path="matchingPassword" cssClass="failed"/>
         </div>
 
         <div class="form-group form-group--buttons">
