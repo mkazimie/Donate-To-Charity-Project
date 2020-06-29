@@ -9,6 +9,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 <html lang="pl">
 <head>
@@ -16,12 +18,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Document</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <body>
 
 <header class="header--main-page">
-    <%@ include file="header.jsp" %>
+    <nav class="container container--70">
+        <%@ include file="header.jsp" %>
+        <ul>
+            <li><a href="/" class="btn btn--without-border active">Start</a></li>
+            <li><a href="#steps" class="btn btn--without-border">O co chodzi?</a></li>
+            <li><a href="#about-us" class="btn btn--without-border">O nas</a></li>
+            <li><a href="#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+            <li><a href="/form" class="btn btn--without-border">Przekaż dary</a></li>
+            <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>
+        </ul>
+    </nav>
+
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
@@ -76,8 +91,11 @@
             <p>kurier przyjedzie w dogodnym terminie</p>
         </div>
     </div>
-
-    <a href="/register" class="btn btn--large">Załóż konto</a>
+    <c:choose>
+        <c:when test="${empty currentUser}">
+            <a href="/register" class="btn btn--large">Załóż konto</a>
+        </c:when>
+    </c:choose>
 </section>
 
 <section id="about-us" class="about-us">
@@ -105,11 +123,11 @@
                     <li>
                 </c:if>
                 <div class="col">
-                <div class="title">${institution.name}</div>
-                <div class="subtitle">${institution.description}</div>
+                    <div class="title">${institution.name}</div>
+                    <div class="subtitle">${institution.description}</div>
                 </div>
                 <c:if test="${theCount.index % 2 == 1}">
-                </li>
+                    </li>
                 </c:if>
             </c:forEach>
         </ul>

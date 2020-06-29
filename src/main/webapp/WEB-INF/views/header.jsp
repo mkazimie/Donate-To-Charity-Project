@@ -1,17 +1,25 @@
-<%@ page pageEncoding="UTF-8"%>
+<%@ page pageEncoding="UTF-8" %>
 
-<nav class="container container--70">
     <ul class="nav--actions">
-        <li><a href="/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
-        <li><a href="/register" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+        <c:choose>
+            <c:when test="${empty currentUser}">
+                <li><a href="/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
+                <li><a href="/register" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+            </c:when>
+            <c:otherwise>
+                <form action="<c:url value="/logout"/>" method="post">
+                    <li><input type="submit" class="btn btn--small btn--without-border" value="Wyloguj"/></li>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <li><a class="btn btn--small btn--without-border" href="/admin/home"><i
+                            class="fas fa-home">${currentUser.name}</i></a></li>
+                </sec:authorize>
+                <sec:authorize access="hasRole('USER')">
+                    <li><a class="btn btn--small btn--without-border" href="/user/home"><i
+                            class="fas fa-home">${currentUser.name}</i></a></li>
+                </sec:authorize>
+            </c:otherwise>
+        </c:choose>
     </ul>
 
-    <ul>
-        <li><a href="/" class="btn btn--without-border active">Start</a></li>
-        <li><a href="#steps" class="btn btn--without-border">O co chodzi?</a></li>
-        <li><a href="#about-us" class="btn btn--without-border">O nas</a></li>
-        <li><a href="#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-        <li><a href="/form" class="btn btn--without-border">Przekaż dary</a></li>
-        <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>
-    </ul>
-</nav>

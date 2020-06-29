@@ -1,12 +1,15 @@
 package pl.coderslab.charity.web;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.domain.Category;
 import pl.coderslab.charity.domain.Institution;
+import pl.coderslab.charity.domain.User;
 import pl.coderslab.charity.domain.dto.DonationDto;
+import pl.coderslab.charity.security.CurrentUser;
 import pl.coderslab.charity.service.CategoryServiceImpl;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
@@ -29,9 +32,12 @@ public class DonationController {
     }
 
     @GetMapping("/form")
-    public String displayForm(Model model) {
+    public String displayForm(Model model, @AuthenticationPrincipal CurrentUser currentUser) {
         model.addAttribute("donationDto", new DonationDto());
-        return "form";
+        if (currentUser != null){
+            model.addAttribute("currentUser", currentUser.getUser());
+        }
+        return "donation-form";
     }
 
     @PostMapping("/form")
@@ -39,15 +45,15 @@ public class DonationController {
                               BindingResult result){
         if (!result.hasErrors()){
             donationService.registerUserDonation(donationDto);
-            return "form-confirmation";
+            return "donation-form-confirmation";
         }
-        return "form";
+        return "donation-form";
     }
 
 
     @RequestMapping("/form-confirmation")
     public String confirmForm(){
-        return "form-confirmation";
+        return "donation-form-confirmation";
     }
 
 

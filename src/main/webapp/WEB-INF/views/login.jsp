@@ -18,7 +18,14 @@
 </head>
 <body>
 <header>
-    <%@ include file="header.jsp" %>
+    <nav class="container container--70">
+        <%@ include file="header.jsp" %>
+        <ul>
+            <li><a href="/" class="btn btn--without-border active">Start</a></li>
+            <li><a href="/form" class="btn btn--without-border">Przekaż dary</a></li>
+            <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>
+        </ul>
+    </nav>
 </header>
 
 <section class="login-page">
@@ -43,7 +50,7 @@
 </section>
 
 
-    <%@ include file="footer.jsp" %>
+<%@ include file="footer.jsp" %>
 
 </body>
 </html>

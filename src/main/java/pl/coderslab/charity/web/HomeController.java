@@ -1,22 +1,25 @@
 package pl.coderslab.charity.web;
 
-import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.domain.Donation;
 import pl.coderslab.charity.domain.Institution;
+import pl.coderslab.charity.domain.Role;
 import pl.coderslab.charity.domain.User;
 import pl.coderslab.charity.domain.dto.UserDto;
 import pl.coderslab.charity.exception.RecordAlreadyExistsException;
+import pl.coderslab.charity.repository.RoleRepository;
+import pl.coderslab.charity.security.CurrentUser;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -25,22 +28,27 @@ public class HomeController {
     private final InstitutionService institutionService;
     private final DonationService donationService;
     private final UserService userService;
+    private final RoleRepository roleRepository;
 
-    public HomeController(InstitutionService institutionService, DonationService donationService, UserService userService) {
+    public HomeController(InstitutionService institutionService, DonationService donationService, UserService userService, RoleRepository roleRepository) {
         this.institutionService = institutionService;
         this.donationService = donationService;
         this.userService = userService;
+        this.roleRepository = roleRepository;
     }
 
 
-    @RequestMapping("/")
-    public String homeAction(Model model){
+    @GetMapping("/")
+    public String homeAction(@AuthenticationPrincipal CurrentUser currentUser, Model model){
         List<Institution> allInstitutions = institutionService.findAll();
         List<Donation> allDonations = donationService.findAll();
         Integer allBags = sumOfBags(allDonations);
         model.addAttribute("allInstitutions", allInstitutions);
         model.addAttribute("allDonations", allDonations.size());
         model.addAttribute("allBags", allBags);
+        if (currentUser != null){
+            model.addAttribute("currentUser", currentUser.getUser());
+        }
         return "index";
     }
 
@@ -72,14 +80,40 @@ public class HomeController {
     }
 
 
+    @GetMapping("/login")
+    public String loginForm(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        if (currentUser != null) {
+            Set<Role> roles = currentUser.getUser().getRoles();
+            if (roles.contains(roleRepository.findByName("ROLE_ADMIN"))){
+                return "redirect:/admin/home";
+            } else {
+                return "redirect:/user/home";
+            }
+        }
+        return "login";
+    }
+
+    @GetMapping("/user/home")
+    public String homeAuthenticated(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        model.addAttribute("currentUser", currentUser.getUser());
+        return "home";
+    }
+
+    @GetMapping("/admin/home")
+    public String homeAdmin(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        model.addAttribute("currentUser", currentUser.getUser());
+        return "admin-panel";
+    }
+
+
 //    @GetMapping("/create-admin")
 //    @ResponseBody
 //    public String createAdmin() {
 //        User user = new User();
-//        user.setName("User");
-//        user.setLastName("User");
-//        user.setPassword("user1");
-//        user.setEmail("user@email.pl");
+//        user.setName("Admin");
+//        user.setLastName("Admin");
+//        user.setPassword("admin");
+//        user.setEmail("admin@email.pl");
 //        userService.createUser(user);
 //        return "Hi admin: " + user.getName();
 //    }
@@ -94,6 +128,7 @@ public class HomeController {
         }
         return totalSum;
     }
+
 
 
 
