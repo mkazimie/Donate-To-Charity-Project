@@ -34,7 +34,7 @@
             </sec:authorize>
             <li><a href="/form" class="btn btn--without-border">Przekaż dary</a></li>
             <li><a href="/#myDonations" class="btn btn--without-border">Dary przekazane</a></li>
-            <li><a href="#/user/profil" class="btn btn--without-border">Twój Profil</a></li>
+            <li><a href="/user/update" class="btn btn--without-border">Twój Profil</a></li>
             <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </sec:authorize>

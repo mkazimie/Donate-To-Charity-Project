@@ -93,30 +93,20 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/user/home")
-    public String homeAuthenticated(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        model.addAttribute("currentUser", currentUser.getUser());
-        return "home";
+
+
+
+    @GetMapping("/create-admin")
+    @ResponseBody
+    public String createAdmin() {
+        User user = new User();
+        user.setName("Admin");
+        user.setLastName("Admin");
+        user.setPassword("admin");
+        user.setEmail("admin@email.pl");
+        userService.createUser(user);
+        return "Hi admin: " + user.getName();
     }
-
-    @GetMapping("/admin/home")
-    public String homeAdmin(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        model.addAttribute("currentUser", currentUser.getUser());
-        return "admin-panel";
-    }
-
-
-//    @GetMapping("/create-admin")
-//    @ResponseBody
-//    public String createAdmin() {
-//        User user = new User();
-//        user.setName("Admin");
-//        user.setLastName("Admin");
-//        user.setPassword("admin");
-//        user.setEmail("admin@email.pl");
-//        userService.createUser(user);
-//        return "Hi admin: " + user.getName();
-//    }
 
 
 

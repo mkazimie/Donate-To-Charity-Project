@@ -11,6 +11,8 @@ import pl.coderslab.charity.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,9 +34,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new NoSuchElementException("No such element in our database"));
+    }
+
+    @Override
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
 
     //use only for creating first user with role admin
     @Override
@@ -49,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(UserDto userDto) throws RecordAlreadyExistsException {
 
-        if(findByEmail(userDto.getEmail()) != null){
+        if (findByEmail(userDto.getEmail()) != null) {
             throw new RecordAlreadyExistsException("Email istnieje w naszej bazie danych");
         } else {
             User user = new User();
@@ -62,6 +72,9 @@ public class UserServiceImpl implements UserService {
             user.setRoles(new HashSet<>(Arrays.asList(userRole)));
             userRepository.save(user);
         }
-
     }
+
+
+
+
 }

@@ -26,28 +26,6 @@
 <sec:authorize access="isAuthenticated()">
     <header class="header--main-page">
         <%@ include file="header-after-login.jsp" %>
-
-    <%--        <nav class="container container--70">--%>
-<%--            <ul class="nav--actions">--%>
-<%--                <form action="<c:url value="/logout"/>" method="post">--%>
-<%--                    <li><input type="submit" class="btn btn--small btn--without-border" value="Wyloguj"/></li>--%>
-<%--                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--                </form>--%>
-
-<%--&lt;%&ndash;                TODO: add link to user profile modification&ndash;%&gt;--%>
-<%--                <li><a class="btn btn--small btn--without-border" href="#"><i--%>
-<%--                        class="fas fa-user">${currentUser.name}</i></a></li>--%>
-<%--            </ul>--%>
-
-<%--            <ul>--%>
-<%--                <li><a href="/" class="btn btn--without-border active">Start</a></li>--%>
-<%--                <li><a href="#steps" class="btn btn--without-border">O co chodzi?</a></li>--%>
-<%--                <li><a href="#about-us" class="btn btn--without-border">O nas</a></li>--%>
-<%--                <li><a href="#help" class="btn btn--without-border">Fundacje i organizacje</a></li>--%>
-<%--                <li><a href="/form" class="btn btn--without-border">Przekaż dary</a></li>--%>
-<%--                <li><a href="#contact" class="btn btn--without-border">Kontakt</a></li>--%>
-<%--            </ul>--%>
-<%--        </nav>--%>
     </header>
     <h1> Witaj, użytkowniku </h1>
     <%@ include file="footer.jsp" %>
